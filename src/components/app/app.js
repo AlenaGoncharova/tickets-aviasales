@@ -1,7 +1,10 @@
 import React from 'react';
+import TicketList from '../ticket-list';
 
 const App = () => {
-  return <div>App</div>;
+  return (
+    <TicketList tickets={[]} />
+  );
 };
 
 export default App;
