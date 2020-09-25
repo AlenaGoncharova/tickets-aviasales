@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import TicketListItem from '../ticket-list-item';
+import { withAviasalesService } from '../hoc';
+import { ticketsLoaded } from '../../actions';
 
 class TicketList extends Component {
+  componentDidMount() {
+    const { aviasalesService } = this.props;
+    const data = aviasalesService.getAllTickets();
+    console.log(data);
+
+    this.props.ticketsLoaded(data);
+  }
+
   render() {
     const { tickets } = this.props;
     return (
@@ -18,4 +30,12 @@ class TicketList extends Component {
   }
 }
 
-export default TicketList;
+const mapStateToProps = ({ tickets }) => {
+  return { tickets };
+};
+
+const mapDispatchToProps = {
+  ticketsLoaded,
+};
+
+export default withAviasalesService()(connect(mapStateToProps, mapDispatchToProps)(TicketList));

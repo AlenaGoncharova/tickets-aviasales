@@ -3,7 +3,7 @@ import TicketList from '../ticket-list';
 
 const App = () => {
   return (
-    <TicketList tickets={[]} />
+    <TicketList />
   );
 };
 
