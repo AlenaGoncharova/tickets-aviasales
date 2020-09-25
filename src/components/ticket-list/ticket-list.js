@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import TicketListItem from '../ticket-list-item';
 import { withAviasalesService } from '../hoc';
 import { ticketsLoaded } from '../../actions';
+import { compose } from '../../utils';
 
 class TicketList extends Component {
   componentDidMount() {
@@ -38,4 +39,7 @@ const mapDispatchToProps = {
   ticketsLoaded,
 };
 
-export default withAviasalesService()(connect(mapStateToProps, mapDispatchToProps)(TicketList));
+export default compose(
+  withAviasalesService(),
+  connect(mapStateToProps, mapDispatchToProps),
+)(TicketList);
