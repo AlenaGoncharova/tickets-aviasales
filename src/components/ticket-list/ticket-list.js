@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import TicketListItem from '../ticket-list-item';
 import Spinner from '../spinner';
 import { withAviasalesService } from '../hoc';
-import { ticketsLoaded } from '../../actions';
+import { ticketsLoaded, ticketsRequested } from '../../actions';
 import { compose } from '../../utils';
 
 class TicketList extends Component {
   componentDidMount() {
     const { aviasalesService, ticketsLoaded } = this.props;
+    ticketsRequested();
     aviasalesService.getAllTickets()
       .then((data) => ticketsLoaded(data));
   }
@@ -40,6 +41,7 @@ const mapStateToProps = ({ tickets, loading }) => {
 
 const mapDispatchToProps = {
   ticketsLoaded,
+  ticketsRequested,
 };
 
 export default compose(

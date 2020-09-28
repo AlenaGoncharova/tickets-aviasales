@@ -5,6 +5,13 @@ const ticketsLoaded = (newTickets) => {
   };
 };
 
+const ticketsRequested = () => {
+  return {
+    type: 'TICKETS_REQUESTED',
+  };
+};
+
 export {
   ticketsLoaded,
+  ticketsRequested,
 };
