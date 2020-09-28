@@ -3,22 +3,29 @@ import { connect } from 'react-redux';
 
 import TicketListItem from '../ticket-list-item';
 import Spinner from '../spinner';
+import ErrorIndicator from '../error-indicator';
 import { withAviasalesService } from '../hoc';
-import { ticketsLoaded, ticketsRequested } from '../../actions';
+import { ticketsLoaded, ticketsRequested, ticketsError } from '../../actions';
 import { compose } from '../../utils';
 
 class TicketList extends Component {
   componentDidMount() {
-    const { aviasalesService, ticketsLoaded } = this.props;
+    const { aviasalesService, ticketsLoaded, ticketsError } = this.props;
     ticketsRequested();
     aviasalesService.getAllTickets()
-      .then((data) => ticketsLoaded(data));
+      .then((data) => ticketsLoaded(data))
+      .catch((err) => ticketsError(err));
   }
 
   render() {
-    const { tickets, loading } = this.props;
+    const { tickets, loading, error } = this.props;
+
     if (loading) {
       return <Spinner />;
+    }
+
+    if (error) {
+      return <ErrorIndicator />;
     }
 
     return (
@@ -35,13 +42,14 @@ class TicketList extends Component {
   }
 }
 
-const mapStateToProps = ({ tickets, loading }) => {
-  return { tickets, loading };
+const mapStateToProps = ({ tickets, loading, error }) => {
+  return { tickets, loading, error };
 };
 
 const mapDispatchToProps = {
   ticketsLoaded,
   ticketsRequested,
+  ticketsError,
 };
 
 export default compose(

@@ -11,7 +11,15 @@ const ticketsRequested = () => {
   };
 };
 
+const ticketsError = (error) => {
+  return {
+    type: 'TICKETS_ERROR',
+    payload: error,
+  };
+};
+
 export {
   ticketsLoaded,
   ticketsRequested,
+  ticketsError,
 };
