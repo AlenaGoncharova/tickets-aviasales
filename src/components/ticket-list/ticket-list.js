@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import TicketListItem from '../ticket-list-item';
+import Spinner from '../spinner';
 import { withAviasalesService } from '../hoc';
 import { ticketsLoaded } from '../../actions';
 import { compose } from '../../utils';
@@ -14,7 +15,10 @@ class TicketList extends Component {
   }
 
   render() {
-    const { tickets } = this.props;
+    const { tickets, loading } = this.props;
+    if (loading) {
+      return <Spinner />;
+    }
 
     return (
       <ul>

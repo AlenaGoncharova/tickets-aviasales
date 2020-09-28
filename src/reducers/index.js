@@ -1,5 +1,6 @@
 const initialState = {
   tickets: [],
+  loading: true,
 };
 
 const reducer = (state = initialState, action) => {
@@ -7,6 +8,7 @@ const reducer = (state = initialState, action) => {
     case 'TICKETS_LOADED':
       return {
         tickets: action.payload,
+        loading: false,
       };
     default:
       return state;
