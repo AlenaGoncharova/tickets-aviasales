@@ -5,16 +5,12 @@ import TicketListItem from '../ticket-list-item';
 import Spinner from '../spinner';
 import ErrorIndicator from '../error-indicator';
 import { withAviasalesService } from '../hoc';
-import { ticketsLoaded, ticketsRequested, ticketsError } from '../../actions';
+import { fetchTickets } from '../../actions';
 import { compose } from '../../utils';
 
 class TicketList extends Component {
   componentDidMount() {
-    const { aviasalesService, ticketsLoaded, ticketsError } = this.props;
-    ticketsRequested();
-    aviasalesService.getAllTickets()
-      .then((data) => ticketsLoaded(data))
-      .catch((err) => ticketsError(err));
+    this.props.fetchTickets();
   }
 
   render() {
@@ -46,10 +42,10 @@ const mapStateToProps = ({ tickets, loading, error }) => {
   return { tickets, loading, error };
 };
 
-const mapDispatchToProps = {
-  ticketsLoaded,
-  ticketsRequested,
-  ticketsError,
+const mapDispatchToProps = (dispatch, { aviasalesService }) => {
+  return {
+    fetchTickets: fetchTickets(aviasalesService, dispatch),
+  };
 };
 
 export default compose(

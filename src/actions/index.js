@@ -18,8 +18,13 @@ const ticketsError = (error) => {
   };
 };
 
+const fetchTickets = (aviasalesService, dispatch) => () => {
+  dispatch(ticketsRequested());
+  aviasalesService.getAllTickets()
+    .then((data) => dispatch(ticketsLoaded(data)))
+    .catch((err) => dispatch(ticketsError(err)));
+};
+
 export {
-  ticketsLoaded,
-  ticketsRequested,
-  ticketsError,
+  fetchTickets,
 };
