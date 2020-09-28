@@ -1,19 +1,19 @@
-const ticketsLoaded = (newTickets) => {
+const ticketsRequested = () => {
   return {
-    type: 'TICKETS_LOADED',
-    payload: newTickets,
+    type: 'FETCH_TICKETS_REQUEST',
   };
 };
 
-const ticketsRequested = () => {
+const ticketsLoaded = (newTickets) => {
   return {
-    type: 'TICKETS_REQUESTED',
+    type: 'FETCH_TICKETS_SUCCESS',
+    payload: newTickets,
   };
 };
 
 const ticketsError = (error) => {
   return {
-    type: 'TICKETS_ERROR',
+    type: 'FETCH_TICKETS_FAILURE',
     payload: error,
   };
 };

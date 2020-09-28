@@ -6,19 +6,19 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'TICKETS_REQUESTED':
+    case 'FETCH_TICKETS_REQUEST':
       return {
         tickets: [],
         loading: false,
         error: null,
       };
-    case 'TICKETS_LOADED':
+    case 'FETCH_TICKETS_SUCCESS':
       return {
         tickets: action.payload,
         loading: false,
         error: null,
       };
-    case 'TICKETS_ERROR':
+    case 'FETCH_TICKETS_FAILURE':
       return {
         tickets: [],
         loading: false,
