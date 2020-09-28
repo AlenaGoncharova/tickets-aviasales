@@ -8,15 +8,14 @@ import { compose } from '../../utils';
 
 class TicketList extends Component {
   componentDidMount() {
-    const { aviasalesService } = this.props;
-    const data = aviasalesService.getAllTickets();
-    console.log(data);
-
-    this.props.ticketsLoaded(data);
+    const { aviasalesService, ticketsLoaded } = this.props;
+    aviasalesService.getAllTickets()
+      .then((data) => ticketsLoaded(data));
   }
 
   render() {
     const { tickets } = this.props;
+
     return (
       <ul>
         {
@@ -31,8 +30,8 @@ class TicketList extends Component {
   }
 }
 
-const mapStateToProps = ({ tickets }) => {
-  return { tickets };
+const mapStateToProps = ({ tickets, loading }) => {
+  return { tickets, loading };
 };
 
 const mapDispatchToProps = {
