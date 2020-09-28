@@ -8,7 +8,21 @@ import { withAviasalesService } from '../hoc';
 import { fetchTickets } from '../../actions';
 import { compose } from '../../utils';
 
-class TicketList extends Component {
+const TicketList = ({ tickets }) => {
+  return (
+    <ul>
+      {
+        tickets.map((ticket, i) => {
+          return (
+            <li key={i}><TicketListItem ticket={ticket} /></li>
+          );
+        })
+      }
+    </ul>
+  );
+};
+
+class TicketListContainer extends Component {
   componentDidMount() {
     this.props.fetchTickets();
   }
@@ -24,17 +38,7 @@ class TicketList extends Component {
       return <ErrorIndicator />;
     }
 
-    return (
-      <ul>
-        {
-          tickets.map((ticket, i) => {
-            return (
-              <li key={i}><TicketListItem ticket={ticket} /></li>
-            );
-          })
-        }
-      </ul>
-    );
+    return <TicketList tickets={tickets} />;
   }
 }
 
@@ -51,4 +55,4 @@ const mapDispatchToProps = (dispatch, { aviasalesService }) => {
 export default compose(
   withAviasalesService(),
   connect(mapStateToProps, mapDispatchToProps),
-)(TicketList);
+)(TicketListContainer);
