@@ -3,6 +3,13 @@ const initialState = {
   loading: true,
   error: null,
   sortType: 'price',
+  filterByStops: {
+    all: false,
+    withoutStops: true,
+    oneStop: true,
+    twoStops: true,
+    threeStops: false,
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -32,6 +39,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         sortType: action.payload,
+      };
+    case 'STOPS_FILTER_CHANGED':
+      return {
+        ...state,
+        filterByStops: action.payload,
       };
     default:
       return state;
