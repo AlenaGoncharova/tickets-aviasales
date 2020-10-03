@@ -25,6 +25,22 @@ const fetchTickets = (aviasalesService, dispatch) => () => {
     .catch((err) => dispatch(ticketsError(err)));
 };
 
+const sortTypeChanged = (newSortType) => {
+  return {
+    type: 'SORT_TYPE_CHANGED',
+    payload: newSortType,
+  };
+};
+
+const stopsFilterChanged = (newStopsFilter) => {
+  return {
+    type: 'STOPS_FILTER_CHANGED',
+    payload: newStopsFilter,
+  };
+};
+
 export {
   fetchTickets,
+  sortTypeChanged,
+  stopsFilterChanged,
 };

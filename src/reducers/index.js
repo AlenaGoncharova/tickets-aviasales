@@ -2,27 +2,36 @@ const initialState = {
   tickets: [],
   loading: true,
   error: null,
+  sortType: 'price',
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'FETCH_TICKETS_REQUEST':
       return {
+        ...state,
         tickets: [],
         loading: false,
         error: null,
       };
     case 'FETCH_TICKETS_SUCCESS':
       return {
+        ...state,
         tickets: action.payload,
         loading: false,
         error: null,
       };
     case 'FETCH_TICKETS_FAILURE':
       return {
+        ...state,
         tickets: [],
         loading: false,
         error: action.payload,
+      };
+    case 'SORT_TYPE_CHANGED':
+      return {
+        ...state,
+        sortType: action.payload,
       };
     default:
       return state;
