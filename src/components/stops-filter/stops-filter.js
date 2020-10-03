@@ -16,24 +16,24 @@ const StopsFilter = ({ filterByStops, stopsFilterChanged }) => {
     <div>
       <legend>КОЛИЧЕСТВО ПЕРЕСАДОК</legend>
       <div>
-        <input type="checkbox" value="Ch1" checked={all} onChange={() => handleChangeStopFilter('all')} />
-        <label htmlFor="Ch1">Все</label>
+        <input type="checkbox" value="allStopsFilter" checked={all} onChange={() => handleChangeStopFilter('all')} />
+        <label htmlFor="allStopsFilter">Все</label>
       </div>
       <div>
-        <input type="checkbox" value="Ch2" checked={withoutStops} onChange={() => handleChangeStopFilter('withoutStops')} />
-        <label htmlFor="Ch2">Без пересадок</label>
+        <input type="checkbox" value="withoutStopsFilter" checked={withoutStops} onChange={() => handleChangeStopFilter('withoutStops')} />
+        <label htmlFor="withoutStopsFilter">Без пересадок</label>
       </div>
       <div>
-        <input type="checkbox" value="Ch3" checked={oneStop} onChange={() => handleChangeStopFilter('oneStop')} />
-        <label htmlFor="Ch3">1 пересадка</label>
+        <input type="checkbox" value="oneStopFilter" checked={oneStop} onChange={() => handleChangeStopFilter('oneStop')} />
+        <label htmlFor="oneStopFilter">1 пересадка</label>
       </div>
       <div>
-        <input type="checkbox" value="Ch4" checked={twoStops} onChange={() => handleChangeStopFilter('twoStops')} />
-        <label htmlFor="Ch4">2 пересадки</label>
+        <input type="checkbox" value="twoStopsFilter" checked={twoStops} onChange={() => handleChangeStopFilter('twoStops')} />
+        <label htmlFor="twoStopsFilter">2 пересадки</label>
       </div>
       <div>
-        <input type="checkbox" value="Ch5" checked={threeStops} onChange={() => handleChangeStopFilter('threeStops')} />
-        <label htmlFor="Ch5">3 пересадки</label>
+        <input type="checkbox" value="threeStopsFilter" checked={threeStops} onChange={() => handleChangeStopFilter('threeStops')} />
+        <label htmlFor="threeStopsFilter">3 пересадки</label>
       </div>
     </div>
   );
