@@ -74,7 +74,7 @@ class TicketListContainer extends Component {
     } else if (sortType === 'time') {
       sortedTickets = sortTicketsByTime(filteredTickets);
     }
-    return <TicketList tickets={sortedTickets} />;
+    return <TicketList tickets={sortedTickets.slice(0, 5)} />;
   }
 }
 
