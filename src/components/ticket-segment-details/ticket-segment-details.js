@@ -2,12 +2,13 @@ import React, { Fragment } from 'react';
 
 const TicketSegmentDetails = ({ segment }) => {
   const { origin, destination, date, stops, duration } = segment;
-  const arrivalDate = new Date(date.getTime() + (duration * 60 * 1000));
+  const formatData = new Date(date);
+  const arrivalDate = new Date(formatData.getTime() + (duration * 60 * 1000));
   return (
     <Fragment>
       <div>{origin}-{destination}</div>
       <div>
-        <span>{date.getHours()}:{date.getMinutes()} - </span>
+        <span>{formatData.getHours()}:{formatData.getMinutes()} - </span>
         <span>{arrivalDate.getHours()}:{arrivalDate.getMinutes()}</span>
       </div>
       <div>
