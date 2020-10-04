@@ -30,6 +30,26 @@ const filteringTicketsByStops = (tickets, stopsFilters) => {
   return filteredTickets;
 };
 
+const sortTicketsByPrice = (tickets) => {
+  function compareByPrice(ticket1, ticket2) {
+    return (ticket1.price - ticket2.price);
+  }
+
+  const sortTickets = tickets.slice().sort(compareByPrice);
+  return sortTickets;
+};
+
+const sortTicketsByTime = (tickets) => {
+  function compareByTime(ticket1, ticket2) {
+    const time1 = ticket1.segments[0].duration + ticket1.segments[1].duration;
+    const time2 = ticket2.segments[0].duration + ticket2.segments[1].duration;
+    return (time1 - time2);
+  }
+
+  const sortTickets = tickets.slice().sort(compareByTime);
+  return sortTickets;
+};
+
 class TicketListContainer extends Component {
   componentDidMount() {
     this.props.fetchTickets();
@@ -69,13 +89,19 @@ class TicketListContainer extends Component {
 
     const stopsFilters = calcFilter();
     const filteredTickets = filteringTicketsByStops(tickets, stopsFilters);
+    let sortedTickets = filteredTickets;
 
-    return <TicketList tickets={filteredTickets} />;
+    if (sortType === 'price') {
+      sortedTickets = sortTicketsByPrice(filteredTickets);
+    } else if (sortType === 'time') {
+      sortedTickets = sortTicketsByTime(filteredTickets);
+    }
+    return <TicketList tickets={sortedTickets} />;
   }
 }
 
-const mapStateToProps = ({ tickets, loading, error, filterByStops }) => {
-  return { tickets, loading, error, filterByStops };
+const mapStateToProps = ({ tickets, loading, error, sortType, filterByStops }) => {
+  return { tickets, loading, error, sortType, filterByStops };
 };
 
 const mapDispatchToProps = (dispatch, { aviasalesService }) => {
