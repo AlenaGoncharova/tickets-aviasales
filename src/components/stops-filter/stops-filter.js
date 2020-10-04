@@ -7,6 +7,20 @@ const StopsFilter = ({ filterByStops, stopsFilterChanged }) => {
   const handleChangeStopFilter = (filterName) => {
     const currentStateFilter = filterByStops[filterName];
     const newFilterByStops = { ...filterByStops, [filterName]: !currentStateFilter };
+    if (newFilterByStops.withoutStops && newFilterByStops.oneStop && newFilterByStops.twoStops && newFilterByStops.threeStops) {
+      newFilterByStops.all = true;
+    } else {
+      newFilterByStops.all = false;
+    }
+    stopsFilterChanged(newFilterByStops);
+  };
+
+  const handleChangeAllStopFilter = () => {
+    const currentStateAllStopsFilter = filterByStops.all;
+    const newFilterByStops = {};
+    for (let stopFilter in filterByStops) {
+      newFilterByStops[stopFilter] = !currentStateAllStopsFilter;
+    }
     stopsFilterChanged(newFilterByStops);
   };
 
@@ -16,7 +30,7 @@ const StopsFilter = ({ filterByStops, stopsFilterChanged }) => {
     <div>
       <legend>КОЛИЧЕСТВО ПЕРЕСАДОК</legend>
       <div>
-        <input type="checkbox" value="allStopsFilter" checked={all} onChange={() => handleChangeStopFilter('all')} />
+        <input type="checkbox" value="allStopsFilter" checked={all} onChange={() => handleChangeAllStopFilter()} />
         <label htmlFor="allStopsFilter">Все</label>
       </div>
       <div>
