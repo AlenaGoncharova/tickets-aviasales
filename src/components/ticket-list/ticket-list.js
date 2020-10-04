@@ -22,13 +22,42 @@ const TicketList = ({ tickets }) => {
   );
 };
 
+const filteringTicketsByStops = (tickets, stopsFilters) => {
+  const filteredTickets = tickets.filter((ticket) => {
+    const [segmentTo, segmentBack] = ticket.segments;
+    return (stopsFilters.includes(segmentTo.stops.length) && stopsFilters.includes(segmentBack.stops.length));
+  });
+  return filteredTickets;
+};
+
 class TicketListContainer extends Component {
   componentDidMount() {
     this.props.fetchTickets();
   }
 
   render() {
-    const { tickets, loading, error } = this.props;
+    const { tickets, loading, error, sortType, filterByStops } = this.props;
+    const calcFilter = () => {
+      const { all, withoutStops, oneStop, twoStops, threeStops } = filterByStops;
+
+      if (all) {
+        return [0, 1, 2, 3];
+      }
+      const filters = [];
+      if (withoutStops) {
+        filters.push(0);
+      }
+      if (oneStop) {
+        filters.push(1);
+      }
+      if (twoStops) {
+        filters.push(2);
+      }
+      if (threeStops) {
+        filters.push(3);
+      }
+      return filters;
+    };
 
     if (loading) {
       return <Spinner />;
@@ -38,12 +67,15 @@ class TicketListContainer extends Component {
       return <ErrorIndicator />;
     }
 
-    return <TicketList tickets={tickets} />;
+    const stopsFilters = calcFilter();
+    const filteredTickets = filteringTicketsByStops(tickets, stopsFilters);
+
+    return <TicketList tickets={filteredTickets} />;
   }
 }
 
-const mapStateToProps = ({ tickets, loading, error }) => {
-  return { tickets, loading, error };
+const mapStateToProps = ({ tickets, loading, error, filterByStops }) => {
+  return { tickets, loading, error, filterByStops };
 };
 
 const mapDispatchToProps = (dispatch, { aviasalesService }) => {
