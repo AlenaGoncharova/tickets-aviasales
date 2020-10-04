@@ -12,7 +12,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         tickets: [],
-        loading: false,
+        loading: true,
         error: null,
       };
     case 'FETCH_TICKETS_SUCCESS':
