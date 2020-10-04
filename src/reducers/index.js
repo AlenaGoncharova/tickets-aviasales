@@ -3,13 +3,7 @@ const initialState = {
   loading: true,
   error: null,
   sortType: 'price',
-  filterByStops: {
-    all: false,
-    withoutStops: true,
-    oneStop: true,
-    twoStops: true,
-    threeStops: false,
-  },
+  filterByStops: new Set([0, 1, 2]),
 };
 
 const reducer = (state = initialState, action) => {
