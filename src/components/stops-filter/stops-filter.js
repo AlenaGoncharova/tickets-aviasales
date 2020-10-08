@@ -4,54 +4,60 @@ import { connect } from 'react-redux';
 import { stopsFilterChanged } from '../../actions';
 
 const StopsFilter = ({ filterByStops, stopsFilterChanged }) => {
-  const isCheckedStopsFilter = (stopsAmount) => {
-    return filterByStops.has(stopsAmount);
+  const isCheckedStopsFilter = (countOfStops) => {
+    return filterByStops.has(countOfStops);
   };
 
-  const handleChangeStopFilter = (stopsAmount) => {
-    let newFilterByStops = new Set(filterByStops);
-    if (newFilterByStops.has(stopsAmount)) {
-      newFilterByStops.delete(stopsAmount);
+  const handleChangeStopsFilter = (countOfStops) => {
+    const newFilterByStops = new Set(filterByStops);
+    if (newFilterByStops.has(countOfStops)) {
+      newFilterByStops.delete(countOfStops);
     } else {
-      newFilterByStops.add(stopsAmount);
+      newFilterByStops.add(countOfStops);
     }
 
     stopsFilterChanged(newFilterByStops);
   };
 
-  const handleChangeAllStopFilter = () => {
-    if (filterByStops.size === 4) {
+  const allStopsFilter = [
+    { countOfStops: 0, name: 'withoutStops', text: 'Без пересадок' },
+    { countOfStops: 1, name: 'oneStop', text: '1 пересадка' },
+    { countOfStops: 2, name: 'twoStops', text: '2 пересадки' },
+    { countOfStops: 3, name: 'threeStops', text: '3 пересадки' },
+  ];
+
+  const handleChangeAllStopsFilter = () => {
+    if (filterByStops.size === allStopsFilter.length) {
       stopsFilterChanged(new Set([]));
     } else {
-      stopsFilterChanged(new Set([0, 1, 2, 3]));
+      stopsFilterChanged(new Set(allStopsFilter.map((filter) => { return filter.countOfStops; })));
     }
   };
-
-  const { all, withoutStops, oneStop, twoStops, threeStops } = filterByStops;
 
   return (
     <div>
       <legend>КОЛИЧЕСТВО ПЕРЕСАДОК</legend>
       <div>
-        <input type="checkbox" value="allStopsFilter" checked={filterByStops.size === 4} onChange={() => handleChangeAllStopFilter()} />
+        <input type="checkbox" value="allStopsFilter"
+                checked={filterByStops.size === allStopsFilter.length}
+                onChange={() => { handleChangeAllStopsFilter(); }} />
         <label htmlFor="allStopsFilter">Все</label>
       </div>
-      <div>
-        <input type="checkbox" value="withoutStopsFilter" checked={isCheckedStopsFilter(0)} onChange={() => handleChangeStopFilter(0)} />
-        <label htmlFor="withoutStopsFilter">Без пересадок</label>
-      </div>
-      <div>
-        <input type="checkbox" value="oneStopFilter" checked={isCheckedStopsFilter(1)} onChange={() => handleChangeStopFilter(1)} />
-        <label htmlFor="oneStopFilter">1 пересадка</label>
-      </div>
-      <div>
-        <input type="checkbox" value="twoStopsFilter" checked={isCheckedStopsFilter(2)} onChange={() => handleChangeStopFilter(2)} />
-        <label htmlFor="twoStopsFilter">2 пересадки</label>
-      </div>
-      <div>
-        <input type="checkbox" value="threeStopsFilter" checked={isCheckedStopsFilter(3)} onChange={() => handleChangeStopFilter(3)} />
-        <label htmlFor="threeStopsFilter">3 пересадки</label>
-      </div>
+      {
+        allStopsFilter.map((filter) => {
+          const { countOfStops, name, text } = filter;
+          return (
+            <div key={name}>
+              <input
+                type="checkbox"
+                name={name}
+                checked={isCheckedStopsFilter(countOfStops)}
+                onChange={() => { handleChangeStopsFilter(countOfStops); }} />
+              <label htmlFor={name}>{text}</label>
+            </div>
+          );
+        })
+      }
     </div>
   );
 };
