@@ -22,7 +22,7 @@ const TicketList = ({ tickets }) => {
   );
 };
 
-const filteringTicketsByStops = (tickets, stopsFilters) => {
+const filterTicketsByStops = (tickets, stopsFilters) => {
   const filteredTickets = tickets.filter((ticket) => {
     const [segmentTo, segmentBack] = ticket.segments;
     return (stopsFilters.has(segmentTo.stops.length) && stopsFilters.has(segmentBack.stops.length));
@@ -30,24 +30,29 @@ const filteringTicketsByStops = (tickets, stopsFilters) => {
   return filteredTickets;
 };
 
-const sortTicketsByPrice = (tickets) => {
-  function compareByPrice(ticket1, ticket2) {
+const sortTickets = (tickets, sortType) => {
+  const compareTicketsByPrice = (ticket1, ticket2) => {
     return (ticket1.price - ticket2.price);
-  }
+  };
 
-  const sortTickets = tickets.slice().sort(compareByPrice);
-  return sortTickets;
-};
+  const compareTicketsByTime = (ticket1, ticket2) => {
+    let [segmentTo, segmentBack] = ticket1.segments;
+    const time1 = segmentTo.duration + segmentBack.duration;
 
-const sortTicketsByTime = (tickets) => {
-  function compareByTime(ticket1, ticket2) {
-    const time1 = ticket1.segments[0].duration + ticket1.segments[1].duration;
-    const time2 = ticket2.segments[0].duration + ticket2.segments[1].duration;
+    [segmentTo, segmentBack] = ticket2.segments;
+    const time2 = segmentTo.duration + segmentBack.duration;
+
     return (time1 - time2);
+  };
+
+  let sortedTickets = tickets;
+  if (sortType === 'price') {
+    sortedTickets = tickets.slice().sort(compareTicketsByPrice);
+  } else if (sortType === 'time') {
+    sortedTickets = tickets.slice().sort(compareTicketsByTime);
   }
 
-  const sortTickets = tickets.slice().sort(compareByTime);
-  return sortTickets;
+  return sortedTickets;
 };
 
 class TicketListContainer extends Component {
@@ -66,14 +71,9 @@ class TicketListContainer extends Component {
       return <ErrorIndicator />;
     }
 
-    const filteredTickets = filteringTicketsByStops(tickets, filterByStops);
-    let sortedTickets = filteredTickets;
+    const filteredTickets = filterTicketsByStops(tickets, filterByStops);
+    const sortedTickets = sortTickets(filteredTickets, sortType);
 
-    if (sortType === 'price') {
-      sortedTickets = sortTicketsByPrice(filteredTickets);
-    } else if (sortType === 'time') {
-      sortedTickets = sortTicketsByTime(filteredTickets);
-    }
     return <TicketList tickets={sortedTickets.slice(0, 5)} />;
   }
 }
