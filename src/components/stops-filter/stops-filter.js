@@ -3,8 +3,14 @@ import { connect } from 'react-redux';
 
 import { stopsFilterChanged } from '../../actions';
 
-const StopsFilter = ({ allStopsFilter, isCheckedAllStopsFilter, handleChangeAllStopsFilter,
-                      isCheckedStopsFilter, handleChangeStopsFilter }) => {
+const StopsFilter = (props) => {
+  const {
+    allStopsFilter,
+    isCheckedAllStopsFilter,
+    handleChangeAllStopsFilter,
+    isCheckedStopsFilter,
+    handleChangeStopsFilter,
+  } = props;
   return (
     <div>
       <legend>КОЛИЧЕСТВО ПЕРЕСАДОК</legend>
@@ -84,12 +90,8 @@ const mapStateToProps = ({ filterByStops }) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    stopsFilterChanged: (stopsFilter) => {
-      dispatch(stopsFilterChanged(stopsFilter));
-    },
-  };
+const mapDispatchToProps = {
+  stopsFilterChanged,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StopsFilterContainer);

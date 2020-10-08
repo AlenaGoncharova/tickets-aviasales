@@ -13,8 +13,16 @@ const Sorting = ({ sortType, sortTypeChanged }) => {
 
   return (
     <div>
-      <button className={sortType === 'price' ? 'active' : null} onClick={() => handleClickSortButton('price')}>САМЫЙ ДЕШЕВЫЙ</button>
-      <button className={sortType === 'time' ? 'active' : null} onClick={() => handleClickSortButton('time')}>САМЫЙ БЫСТРЫЙ</button>
+      <button
+        className={sortType === 'price' ? 'active' : null}
+        onClick={() => { handleClickSortButton('price'); }}>
+          САМЫЙ ДЕШЕВЫЙ
+      </button>
+      <button
+        className={sortType === 'time' ? 'active' : null}
+        onClick={() => { handleClickSortButton('time'); }}>
+          САМЫЙ БЫСТРЫЙ
+      </button>
     </div>
   );
 };
@@ -25,12 +33,8 @@ const mapStateToProps = ({ sortType }) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    sortTypeChanged: (sortType) => {
-      dispatch(sortTypeChanged(sortType));
-    },
-  };
+const mapDispatchToProps = {
+  sortTypeChanged,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sorting);
