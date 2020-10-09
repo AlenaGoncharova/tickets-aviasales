@@ -8,9 +8,11 @@ import { withAviasalesService } from '../hoc';
 import { fetchTickets } from '../../actions';
 import { compose } from '../../utils';
 
+import './ticket-list.css';
+
 const TicketList = ({ tickets }) => {
   return (
-    <ul>
+    <ul className="ticket-list">
       {
         tickets.map((ticket, i) => {
           return (

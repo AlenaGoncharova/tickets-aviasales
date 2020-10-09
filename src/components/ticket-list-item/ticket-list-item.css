@@ -1,0 +1,13 @@
+.ticket-list-item {
+  /* display: flex; */
+  margin: 15px 0;
+  border: solid 1px black;
+}
+
+.ticket-list-item-details {
+  display: flex;
+}
+
+.ticket-list-item-segment-details {
+  margin-right: 10px;
+}

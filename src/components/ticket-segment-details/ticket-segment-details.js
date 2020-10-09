@@ -14,7 +14,7 @@ const TicketSegmentDetails = ({ segment }) => {
       <div>
         В ПУТИ {Math.floor(duration / 60)}ч {duration % 60}м
       </div>
-      <div><span>{stops.length} ПЕРЕСАДКИ </span><span>{stops}</span></div>
+      <div><span>{stops.length} ПЕРЕСАДКИ </span><span>{stops.join(' ')}</span></div>
     </Fragment>
   );
 };
